@@ -3,12 +3,67 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Battle {
+    private List<Field> fields = new ArrayList<>();
+    private Ship[] ships = Ship.values();
     public void startGame() {
         Scanner scanner = new Scanner(System.in);
+        playersInput();
+        System.out.println("Press Enter and pass the move to another player");
+        scanner.nextLine();
+        scanner.nextLine();
+        playersShoot();
+    }
+
+    private void playersShoot() {
         int player = 0;
-//        Field[] fields = new Field[2];
-        List<Field> fields = new ArrayList<>();
-        Ship[] ships = Ship.values();
+        boolean isWin = false;
+        Scanner scanner = new Scanner(System.in);
+        while (!isWin) {
+            switch (player) {
+                case 0:
+                    firstShoot();
+                    if (fields.get(1).getHealth() == 0) {
+                        isWin = true;
+                        break;
+                    }
+                    player = 1;
+                    System.out.println("Press Enter and pass the move to another player");
+                    scanner.nextLine();
+                    scanner.nextLine();
+                    break;
+                case 1:
+                    secondShoot();
+                    if (fields.get(0).getHealth() == 0) {
+                        isWin = true;
+                        break;
+                    }
+                    player = 0;
+                    System.out.println("Press Enter and pass the move to another player");
+                    scanner.nextLine();
+                    scanner.nextLine();
+            }
+        }
+    }
+
+    private void secondShoot() {
+        Scanner scanner = new Scanner(System.in);
+        fields.get(0).printHiddenField();
+        System.out.println("---------------------");
+        fields.get(1).printField();
+        System.out.println("\nPlayer 2, it's your turn:");
+        while (fields.get(0).getHealth() != 0) {
+            String shot = scanner.next();
+            int x = Integer.parseInt(shot.substring(1)) - 1;
+            int y = shot.charAt(0) - 65;
+            boolean isShot = fields.get(0).shot(x, y);
+            if (isShot) {
+                break;
+            }
+        }
+    }
+
+    private void playersInput() {
+        Scanner scanner = new Scanner(System.in);
         for (int i = 0; i < 2; i++) {
             fields.add(new Field());
             if (i == 1) {
@@ -38,57 +93,20 @@ public class Battle {
             }
 
         }
-        System.out.println("Press Enter and pass the move to another player");
-        scanner.nextLine();
-        scanner.nextLine();
-        boolean isWin = false;
-        while (!isWin) {
-            switch (player) {
-                case 0:
-                    fields.get(1).printHiddenField();
-                    System.out.println("---------------------");
-                    fields.get(0).printField();
-                    System.out.println("\nPlayer 1, it's your turn:");
-                    while (fields.get(1).getHealth() != 0) {
-                        String shot = scanner.next();
-                        int x = Integer.parseInt(shot.substring(1)) - 1;
-                        int y = shot.charAt(0) - 65;
-                        boolean isShot = fields.get(1).shot(x, y);
-                        if (isShot) {
-                            break;
-                        }
-                    }
-                    if (fields.get(1).getHealth() == 0) {
-                        isWin = true;
-                        break;
-                    }
-                    player = 1;
-                    System.out.println("Press Enter and pass the move to another player");
-                    scanner.nextLine();
-                    scanner.nextLine();
-                    break;
-                case 1:
-                    fields.get(0).printHiddenField();
-                    System.out.println("---------------------");
-                    fields.get(1).printField();
-                    System.out.println("\nPlayer 2, it's your turn:");
-                    while (fields.get(0).getHealth() != 0) {
-                        String shot = scanner.next();
-                        int x = Integer.parseInt(shot.substring(1)) - 1;
-                        int y = shot.charAt(0) - 65;
-                        boolean isShot = fields.get(0).shot(x, y);
-                        if (isShot) {
-                            break;
-                        }
-                    }
-                    if (fields.get(0).getHealth() == 0) {
-                        isWin = true;
-                        break;
-                    }
-                    player = 0;
-                    System.out.println("Press Enter and pass the move to another player");
-                    scanner.nextLine();
-                    scanner.nextLine();
+    }
+    void firstShoot(){
+        Scanner scanner = new Scanner(System.in);
+        fields.get(1).printHiddenField();
+        System.out.println("---------------------");
+        fields.get(0).printField();
+        System.out.println("\nPlayer 1, it's your turn:");
+        while (fields.get(1).getHealth() != 0) {
+            String shot = scanner.next();
+            int x = Integer.parseInt(shot.substring(1)) - 1;
+            int y = shot.charAt(0) - 65;
+            boolean isShot = fields.get(1).shot(x, y);
+            if (isShot) {
+                break;
             }
         }
     }
