@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Field {
     static Scanner scanner = new Scanner(System.in);
+    private final int MIN=0,MAX=9;
     private char[][] field;
     private int health;
 
@@ -47,11 +48,11 @@ public class Field {
             return false;
         }
         for (int r = row1 - 1; r <= row1 + 1; r++) {
-            if (r < 0 || r > 9) {
+            if (r < MIN || r > MAX) {
                 continue;
             }
             for (int c = col1 - 1; c <= col2 + 1; c++) {
-                if (c < 0 || c > 9) {
+                if (c < MIN || c > MAX) {
                     continue;
                 }
                 if (this.field[r][c] == 'O') {
@@ -114,7 +115,7 @@ public class Field {
     }
 
     public boolean shot(int x, int y) {
-        if ((x < 0 || x > 9) || (y < 0 || y > 9)) {
+        if ((x < MIN || x > MAX) || (y < MIN || y > MAX)) {
             System.out.println("\nError! You entered the wrong coordinates! Try again:\n");
             return false;
         }
@@ -143,11 +144,11 @@ public class Field {
             health--;
             printHiddenField();
             for (int c = y - 1; c <= y + 1; c++) {
-                if (c < 0 || c > 9) {
+                if (c < MIN || c > MAX) {
                     continue;
                 }
                 for (int r = x - 1; r <= x + 1; r++) {
-                    if (r < 0 || r > 9) {
+                    if (r < MIN || r > MAX) {
                         continue;
                     }
                     if (this.field[r][c] == 'O') {

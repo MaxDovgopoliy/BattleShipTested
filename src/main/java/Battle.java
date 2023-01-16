@@ -52,7 +52,7 @@ public class Battle {
         while (fields.get(0).getHealth() != 0) {
             String shot = scanner.next();
             int x = Integer.parseInt(shot.substring(1)) - 1;
-            int y = shot.charAt(0) - 65;
+            int y = shot.charAt(0) - 'A';
             boolean isShot = fields.get(0).shot(x, y);
             if (isShot) {
                 break;
@@ -77,9 +77,9 @@ public class Battle {
                 while (true) {
                     String coordinate1 = scanner.nextLine();
                     String coordinate2 = scanner.nextLine();
-                    int row1 = coordinate1.charAt(0) - 65;
+                    int row1 = coordinate1.charAt(0) - 'A';
                     int col1 = Integer.parseInt(coordinate1.substring(1)) - 1;
-                    int row2 = coordinate2.charAt(0) - 65;
+                    int row2 = coordinate2.charAt(0) - 'A';
                     int col2 = Integer.parseInt(coordinate2.substring(1)) - 1;
                     boolean isPLaced = fields.get(i).placeShip(row1, col1, row2, col2, ship);
                     if (isPLaced) {
@@ -99,7 +99,7 @@ public class Battle {
         while (fields.get(1).getHealth() != 0) {
             String shot = scanner.next();
             int x = Integer.parseInt(shot.substring(1)) - 1;
-            int y = shot.charAt(0) - 65;
+            int y = shot.charAt(0) - 'A';
             boolean isShot = fields.get(1).shot(x, y);
             if (isShot) {
                 break;
