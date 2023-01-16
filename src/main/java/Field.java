@@ -130,14 +130,14 @@ public class Field {
         }
     }
 
-    private boolean miss(int x, int y) {
+    public boolean miss(int x, int y) {
         field[y][x] = 'M';
         printHiddenField();
         System.out.println("\nYou missed!");
         return true;
     }
 
-    private boolean hit(int x, int y) {
+    public boolean hit(int x, int y) {
         if (health != 1) {
             field[y][x] = 'X';
             health--;
@@ -167,7 +167,7 @@ public class Field {
         }
     }
 
-    private boolean alreadyHit() {
+    public boolean alreadyHit() {
         printHiddenField();
         System.out.print("\nYou hit a ship!");
         return true;

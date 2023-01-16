@@ -3,10 +3,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Battle {
+    Scanner scanner = new Scanner(System.in);
     private List<Field> fields = new ArrayList<>();
     private Ship[] ships = Ship.values();
     public void startGame() {
-        Scanner scanner = new Scanner(System.in);
         playersInput();
         System.out.println("Press Enter and pass the move to another player");
         scanner.nextLine();
@@ -14,10 +14,9 @@ public class Battle {
         playersShoot();
     }
 
-    private void playersShoot() {
+    public void playersShoot() {
         int player = 0;
         boolean isWin = false;
-        Scanner scanner = new Scanner(System.in);
         while (!isWin) {
             switch (player) {
                 case 0:
@@ -45,8 +44,7 @@ public class Battle {
         }
     }
 
-    private void secondShoot() {
-        Scanner scanner = new Scanner(System.in);
+    public void secondShoot() {
         fields.get(0).printHiddenField();
         System.out.println("---------------------");
         fields.get(1).printField();
@@ -62,8 +60,7 @@ public class Battle {
         }
     }
 
-    private void playersInput() {
-        Scanner scanner = new Scanner(System.in);
+    public void playersInput() {
         for (int i = 0; i < 2; i++) {
             fields.add(new Field());
             if (i == 1) {
@@ -94,8 +91,7 @@ public class Battle {
 
         }
     }
-    void firstShoot(){
-        Scanner scanner = new Scanner(System.in);
+    public void firstShoot(){
         fields.get(1).printHiddenField();
         System.out.println("---------------------");
         fields.get(0).printField();

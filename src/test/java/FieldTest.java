@@ -1,13 +1,15 @@
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doNothing;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.spy;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 
+@PrepareForTest(Battle.class)
 class FieldTest {
 
     @Test
@@ -54,4 +56,92 @@ class FieldTest {
     }
 
 
+    @Test
+    public void testPlaceShip() {
+        Field mock = spy(new Field());
+        boolean res1 = mock.placeShip(1, 2, 3, 4, Ship.DESTROYER);
+        boolean res2 = mock.placeShip(2, 2, 4, 2, Ship.CRUISER);
+        assertFalse(res1);
+        assertTrue(res2);
+
+    }
+
+    @Test
+    public void printField() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        PrintStream ps = new PrintStream(byteArrayOutputStream);
+        System.setOut(ps);
+
+        Field mock = spy(new Field());
+        mock.printField();
+        assertTrue(byteArrayOutputStream.toString()
+                .contains("  1 2 3 4 5 6 7 8 9 10\n" +
+                        "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                        "B ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                        "C ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                        "D ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                        "E ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                        "F ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                        "G ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                        "H ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                        "I ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                        "J ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n"));
+    }
+
+    @Test
+    public void shot() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        PrintStream ps = new PrintStream(byteArrayOutputStream);
+        System.setOut(ps);
+
+        Field mock = spy(new Field());
+        mock.placeShip(2, 2, 3, 2, Ship.DESTROYER);
+        mock.shot(29,29);
+        mock.shot(1,1);
+        mock.shot(2,2);
+        mock.shot(2,2);
+       verify(mock).miss(1,1);
+       verify(mock).hit(2,2);
+       verify(mock).alreadyHit();
+        assertTrue(byteArrayOutputStream.toString()
+                .contains("Error! You entered the wrong coordinates! Try again:"));
+    }
+    @Test
+    public void alreadyHit() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        PrintStream ps = new PrintStream(byteArrayOutputStream);
+        System.setOut(ps);
+
+        Field mock = spy(new Field());
+        mock.alreadyHit();
+        assertTrue(byteArrayOutputStream.toString()
+                .contains("\nYou hit a ship!"));
+    }
+    @Test
+    public void miss() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        PrintStream ps = new PrintStream(byteArrayOutputStream);
+        System.setOut(ps);
+
+        Field mock = spy(new Field());
+        mock.miss(1,1);
+        assertTrue(byteArrayOutputStream.toString()
+                .contains("You missed!"));
+    }
+    @Test
+    public void hit() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        PrintStream ps = new PrintStream(byteArrayOutputStream);
+        System.setOut(ps);
+
+        Field mock = spy(new Field());
+        mock.hit(2,2);
+        assertTrue(byteArrayOutputStream.toString()
+                .contains("You sank a ship!"));
+    }
 }
