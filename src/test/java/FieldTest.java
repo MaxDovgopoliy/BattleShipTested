@@ -3,6 +3,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.spy;
 
+import domain.Battle;
+import domain.Field;
+import Ships.Ship;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
@@ -28,14 +31,14 @@ class FieldTest {
         field.placeShip(4, 3, 3, 3, Ship.DESTROYER);
         field.placeShip(4, 4, 3, 4, Ship.DESTROYER);
         field.printField();
-        field.shot(11,11);
-        field.shot(1,1);
-        field.shot(1,1);
-        field.shot(2,1);
-        field.shot(6,6);
-        field.shot(3,3);
-        field.shot(3,3);
-        field.shot(3,4);
+        field.makeShot(11,11);
+        field.makeShot(1,1);
+        field.makeShot(1,1);
+        field.makeShot(2,1);
+        field.makeShot(6,6);
+        field.makeShot(3,3);
+        field.makeShot(3,3);
+        field.makeShot(3,4);
 
         List<String> expectedValue =List.of("You sank the last ship. You won. Congratulations!",
                 "You hit a ship!","  1 2 3 4 5 6 7 8 9 10\n" +
@@ -98,10 +101,10 @@ class FieldTest {
 
         Field mock = spy(new Field());
         mock.placeShip(2, 2, 3, 2, Ship.DESTROYER);
-        mock.shot(29,29);
-        mock.shot(1,1);
-        mock.shot(2,2);
-        mock.shot(2,2);
+        mock.makeShot(29,29);
+        mock.makeShot(1,1);
+        mock.makeShot(2,2);
+        mock.makeShot(2,2);
        verify(mock).miss(1,1);
        verify(mock).hit(2,2);
        verify(mock).alreadyHit();

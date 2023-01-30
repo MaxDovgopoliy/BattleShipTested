@@ -1,3 +1,6 @@
+package domain;
+
+import Ships.Ship;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -114,7 +117,7 @@ public class Field {
         }
     }
 
-    public boolean shot(int x, int y) {
+    public boolean makeShot(int x, int y) {
         if ((x < MIN || x > MAX) || (y < MIN || y > MAX)) {
             System.out.println("\nError! You entered the wrong coordinates! Try again:\n");
             return false;
